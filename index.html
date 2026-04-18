@@ -1,0 +1,1203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IIM-associated cancer screening</title>
+    <meta
+      name="description"
+      content="Cancer screening recommendations for idiopathic inflammatory myopathies (IIM)."
+    />
+
+    <style>
+      :root {
+        --bg: #f6f8fb;
+        --panel: #ffffff;
+        --text: #0f172a;
+        --muted: #475569;
+        --muted-2: #64748b;
+        --border: #e2e8f0;
+        --shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+        --shadow-soft: 0 6px 18px rgba(2, 6, 23, 0.06);
+        --ring: rgba(37, 99, 235, 0.25);
+
+        --blue: #2563eb;
+        --blue-2: #1d4ed8;
+        --green: #16a34a;
+        --amber: #d97706;
+        --red: #dc2626;
+
+        --radius: 14px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        font-family:
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          Helvetica,
+          Arial,
+          "Apple Color Emoji",
+          "Segoe UI Emoji";
+        color: var(--text);
+        background: radial-gradient(1200px 700px at 15% 0%, #eef2ff 0%, transparent 60%),
+          radial-gradient(1000px 700px at 100% 20%, #eff6ff 0%, transparent 55%),
+          var(--bg);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 28px 18px 38px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+
+      .brand {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .title {
+        font-size: clamp(20px, 2.4vw, 28px);
+        font-weight: 760;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+      }
+
+      .subtitle {
+        color: var(--muted);
+        line-height: 1.4;
+        font-size: 14px;
+        max-width: 66ch;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 999px;
+        color: var(--muted);
+        font-size: 12px;
+        box-shadow: 0 1px 0 rgba(2, 6, 23, 0.04);
+        backdrop-filter: blur(8px);
+        white-space: nowrap;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 18px;
+        align-items: start;
+      }
+
+      @media (max-width: 980px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-soft);
+        overflow: hidden;
+      }
+
+      .cardHeader {
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        background: linear-gradient(to bottom, rgba(248, 250, 252, 0.9), rgba(255, 255, 255, 0.9));
+      }
+
+      .cardHeader h2 {
+        margin: 0;
+        font-size: 14px;
+        letter-spacing: 0.01em;
+        color: #0b1220;
+      }
+
+      .cardBody {
+        padding: 16px;
+      }
+
+      .sectionTitle {
+        font-size: 13px;
+        font-weight: 700;
+        color: #0b1220;
+        margin: 0 0 10px;
+      }
+
+      .sectionTitleRow {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      .sectionTitleRow .sectionTitle {
+        margin: 0;
+      }
+
+      .helper {
+        margin: 8px 0 0;
+        color: var(--muted-2);
+        font-size: 12px;
+        line-height: 1.4;
+      }
+
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      @media (max-width: 560px) {
+        .row {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      label.small {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .control {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 10px 12px;
+        font-size: 14px;
+        outline: none;
+        background: #fff;
+      }
+
+      .control:focus {
+        border-color: rgba(37, 99, 235, 0.55);
+        box-shadow: 0 0 0 4px var(--ring);
+      }
+
+      .segmented {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      .segmented button {
+        padding: 10px 10px;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.2;
+      }
+
+      .segmented button + button {
+        border-left: 1px solid var(--border);
+      }
+
+      .segmented button.active {
+        color: #0b1220;
+        background: rgba(37, 99, 235, 0.08);
+        font-weight: 700;
+      }
+
+      .callout {
+        margin-top: 10px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(217, 119, 6, 0.35);
+        background: rgba(245, 158, 11, 0.08);
+        color: #7c2d12;
+        font-size: 12px;
+        line-height: 1.35;
+      }
+
+      .riskTable {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      .riskTableHeader {
+        display: grid;
+        grid-template-columns: 1.25fr 1fr 1fr 1fr;
+        gap: 0;
+        border-bottom: 1px solid var(--border);
+        background: rgba(248, 250, 252, 0.85);
+      }
+
+      .riskTableHeader div {
+        padding: 10px 12px;
+        font-size: 12px;
+        color: var(--muted);
+        font-weight: 700;
+      }
+
+      .riskTableHeader .colHigh {
+        color: #7f1d1d;
+      }
+      .riskTableHeader .colInter {
+        color: #78350f;
+      }
+      .riskTableHeader .colLow {
+        color: #14532d;
+      }
+
+      .groupRow {
+        display: grid;
+        grid-template-columns: 1.25fr 1fr 1fr 1fr;
+        border-bottom: 1px solid var(--border);
+      }
+      .groupRow:last-child {
+        border-bottom: 0;
+      }
+
+      .groupLabel {
+        padding: 12px;
+        border-right: 1px solid var(--border);
+        background: rgba(248, 250, 252, 0.75);
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .groupLabel .name {
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        color: #0b1220;
+      }
+
+      .groupLabel .hint {
+        font-size: 12px;
+        color: var(--muted-2);
+        line-height: 1.35;
+      }
+
+      .groupCell {
+        padding: 10px 12px;
+      }
+
+      .checks {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .check {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        padding: 8px 10px;
+        border-radius: 12px;
+        border: 1px solid rgba(226, 232, 240, 0.9);
+        background: rgba(255, 255, 255, 0.9);
+        transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;
+      }
+
+      .check:hover {
+        border-color: rgba(148, 163, 184, 0.8);
+        box-shadow: 0 6px 16px rgba(2, 6, 23, 0.06);
+        transform: translateY(-1px);
+      }
+
+      .check input {
+        margin-top: 2px;
+        width: 16px;
+        height: 16px;
+        accent-color: var(--blue);
+      }
+
+      .check .labelText {
+        font-size: 13px;
+        color: #0b1220;
+        line-height: 1.25;
+      }
+
+      .subtleCounts {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-end;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 8px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.75);
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        display: inline-block;
+      }
+
+      .dot.high {
+        background: var(--red);
+      }
+      .dot.intermediate {
+        background: var(--amber);
+      }
+      .dot.low {
+        background: var(--green);
+      }
+
+      .outputCard {
+        position: sticky;
+        top: 18px;
+      }
+
+      @media (max-width: 980px) {
+        .outputCard {
+          position: static;
+        }
+      }
+
+      .outputHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .riskPill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+      .riskPill.high {
+        background: rgba(220, 38, 38, 0.08);
+        border-color: rgba(220, 38, 38, 0.25);
+        color: #7f1d1d;
+      }
+      .riskPill.moderate {
+        background: rgba(217, 119, 6, 0.1);
+        border-color: rgba(217, 119, 6, 0.28);
+        color: #78350f;
+      }
+      .riskPill.standard {
+        background: rgba(22, 163, 74, 0.09);
+        border-color: rgba(22, 163, 74, 0.25);
+        color: #14532d;
+      }
+      .riskPill.na {
+        background: rgba(100, 116, 139, 0.08);
+        border-color: rgba(100, 116, 139, 0.22);
+        color: #334155;
+      }
+
+      .outputBody h3 {
+        font-size: 13px;
+        margin: 14px 0 8px;
+        color: #0b1220;
+      }
+
+      .outputBody p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .recommendationFocus {
+        margin-top: 12px;
+        padding: 12px;
+        border-radius: 16px;
+        border: 1px solid rgba(79, 70, 229, 0.28);
+        background: linear-gradient(180deg, rgba(79, 70, 229, 0.16), rgba(79, 70, 229, 0.07));
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 10px 24px rgba(2, 6, 23, 0.06);
+      }
+
+      .recommendationFocus .helper {
+        color: rgba(15, 23, 42, 0.68);
+      }
+
+      .recommendationFocus .bubble {
+        background: rgba(255, 255, 255, 0.82);
+        border-color: rgba(79, 70, 229, 0.22);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .recommendationFocus .bubbleTitle {
+        color: rgba(2, 6, 23, 0.92);
+      }
+
+      .recommendationFocus .bubbleHelper {
+        margin-top: auto;
+        padding-top: 10px;
+      }
+
+      .bubbleGrid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 10px;
+      }
+
+      @media (max-width: 560px) {
+        .bubbleGrid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .bubble {
+        border: 1px solid rgba(226, 232, 240, 0.95);
+        background: rgba(248, 250, 252, 0.65);
+        border-radius: 14px;
+        padding: 12px;
+      }
+
+      .bubbleTitle {
+        font-size: 12px;
+        font-weight: 850;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        color: #0b1220;
+        margin-bottom: 8px;
+      }
+
+      .miniBullets {
+        margin: 0;
+        padding-left: 18px;
+        color: #0b1220;
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .andRow {
+        list-style: none;
+        padding-left: 0;
+        margin: 6px 0;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 10px;
+        color: rgba(15, 23, 42, 0.72);
+        font-weight: 850;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-size: 11px;
+      }
+
+      .bullets {
+        margin: 0;
+        padding-left: 18px;
+        color: #0b1220;
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .bullets li {
+        margin: 4px 0;
+      }
+
+      .subListTitle {
+        font-weight: 800;
+      }
+
+      .divider {
+        height: 1px;
+        background: var(--border);
+        margin: 14px 0;
+      }
+
+      .tinyNote {
+        margin-top: 12px;
+        font-size: 12px;
+        color: var(--muted-2);
+        line-height: 1.4;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px dashed rgba(148, 163, 184, 0.8);
+        background: rgba(248, 250, 252, 0.7);
+      }
+
+      .footerNote {
+        margin-top: 14px;
+        font-size: 12px;
+        color: var(--muted-2);
+        line-height: 1.4;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="module">
+      import React, { useMemo, useState } from "https://esm.sh/react@18.3.1";
+      import { createRoot } from "https://esm.sh/react-dom@18.3.1/client";
+
+      const RISK_FACTORS = [
+        { id: "iim_subtype_dermatomyositis", label: "Dermatomyositis", row: "IIM subtype", column: "high_risk" },
+        { id: "iim_subtype_cadm", label: "CADM", row: "IIM subtype", column: "intermediate_risk" },
+        { id: "iim_subtype_polymyositis", label: "Polymyositis", row: "IIM subtype", column: "intermediate_risk" },
+        { id: "iim_subtype_imnm", label: "IMNM", row: "IIM subtype", column: "intermediate_risk" },
+        { id: "iim_subtype_assd", label: "ASSD", row: "IIM subtype", column: "low_risk" },
+        { id: "iim_subtype_ctd_associated_iim", label: "CTD-associated IIM", row: "IIM subtype", column: "low_risk" },
+        { id: "msa_maa_anti_tif1_gamma", label: "Anti-TIF1-γ antibodies", row: "MSA and MAA", column: "high_risk" },
+        { id: "msa_maa_anti_nxp2", label: "Anti-NXP2 antibodies", row: "MSA and MAA", column: "high_risk" },
+        { id: "msa_maa_anti_sae1", label: "Anti-SAE1 antibodies", row: "MSA and MAA", column: "intermediate_risk" },
+        { id: "msa_maa_anti_hmgcr", label: "Anti-HMGCR antibodies", row: "MSA and MAA", column: "intermediate_risk" },
+        { id: "msa_maa_anti_mi2", label: "Anti-Mi2 antibodies", row: "MSA and MAA", column: "intermediate_risk" },
+        { id: "msa_maa_anti_mda5", label: "Anti-MDA5 antibodies", row: "MSA and MAA", column: "intermediate_risk" },
+        { id: "msa_maa_anti_srp", label: "Anti-SRP antibodies", row: "MSA and MAA", column: "low_risk" },
+        { id: "msa_maa_anti_jo1", label: "Anti-Jo1 antibodies", row: "MSA and MAA", column: "low_risk" },
+        { id: "msa_maa_non_jo1_assd_antibodies", label: "Non-Jo1 ASSD antibodies", row: "MSA and MAA", column: "low_risk" },
+        {
+          id: "msa_maa_maa",
+          label: "MAA (Anti-PM-Scl, anti-Ku, anti-RNP, anti-SSA/Ro, or anti-SSB/La antibodies)",
+          row: "MSA and MAA",
+          column: "low_risk",
+        },
+        { id: "clinical_age_over_40_at_onset", label: "Age >40 years at IIM onset", row: "Clinical features", column: "high_risk" },
+        {
+          id: "clinical_persistent_high_disease_activity_despite_therapy",
+          label: "Persistent high disease activity despite therapy",
+          row: "Clinical features",
+          column: "high_risk",
+        },
+        { id: "clinical_dysphagia_moderate_to_severe", label: "Dysphagia (moderate to severe)", row: "Clinical features", column: "high_risk" },
+        { id: "clinical_cutaneous_necrosis", label: "Cutaneous necrosis", row: "Clinical features", column: "high_risk" },
+        { id: "clinical_male_sex", label: "Male sex", row: "Clinical features", column: "intermediate_risk" },
+        { id: "clinical_raynaud_phenomenon", label: "Raynaud phenomenon", row: "Clinical features", column: "low_risk" },
+        { id: "clinical_inflammatory_arthropathy", label: "Inflammatory arthropathy", row: "Clinical features", column: "low_risk" },
+        { id: "clinical_interstitial_lung_disease", label: "Interstitial lung disease", row: "Clinical features", column: "low_risk" },
+      ];
+
+      const basic_screening_panel = [
+        "Comprehensive history",
+        "Comprehensive physical examination",
+        "Complete blood count",
+        "Serum liver function tests",
+        "Serum ESR and/or plasma viscosity",
+        "Serum CRP",
+        "Serum protein electrophoresis",
+        "Urinalysis",
+        "Plain chest X-ray radiograph",
+      ];
+
+      const enhanced_screening_panel = [
+        "CT scan of the neck, thorax, abdomen and pelvis",
+        "Cervical screening",
+        "Mammography",
+        "Prostate-specific antigen",
+        "CA-125",
+        "Pelvic or transvaginal ultrasonography for ovarian cancer",
+        "Faecal occult blood",
+      ];
+
+      function buildRecommendation({ iimType, yearsSinceOnset, selectedIds, npcRegionChecked }) {
+        const applyWithin3YearsNote = Number.isFinite(yearsSinceOnset) && yearsSinceOnset > 3;
+
+        if (iimType === "juvenile_onset") {
+          return {
+            mode: "no_routine",
+            riskCategory: "Not applicable",
+            timeSinceNote: applyWithin3YearsNote,
+            content: {
+              summary: "Cancer screening not routinely required.",
+            },
+          };
+        }
+
+        if (iimType === "inclusion_body_myositis") {
+          return {
+            mode: "no_routine",
+            riskCategory: "Not applicable",
+            timeSinceNote: applyWithin3YearsNote,
+            content: {
+              summary: "Cancer screening not routinely required.",
+            },
+          };
+        }
+
+        // adult_onset
+        const selected = RISK_FACTORS.filter((f) => selectedIds.has(f.id));
+        const high_risk_count = selected.filter((f) => f.column === "high_risk").length;
+        const intermediate_risk_count = selected.filter((f) => f.column === "intermediate_risk").length;
+        const low_risk_count = selected.filter((f) => f.column === "low_risk").length;
+
+        let risk_category = "Standard risk of IIM-related cancer";
+        if (high_risk_count >= 2) {
+          risk_category = "High risk of IIM-related cancer";
+        } else if (intermediate_risk_count >= 2 || high_risk_count === 1) {
+          risk_category = "Moderate risk of IIM-related cancer";
+        }
+
+        const recommendation = {
+          mode: "adult",
+          riskCategory: risk_category,
+          timeSinceNote: applyWithin3YearsNote,
+          counts: { high_risk_count, intermediate_risk_count, low_risk_count },
+          content: {
+            timeOfDiagnosis: [],
+            followUp: [],
+            additional: [],
+          },
+        };
+
+        if (risk_category === "High risk of IIM-related cancer") {
+          recommendation.content.timeOfDiagnosis.push(
+            { title: "Basic screening panel", items: basic_screening_panel },
+            { title: "Enhanced screening panel", items: enhanced_screening_panel }
+          );
+          recommendation.content.followUp.push(
+            { title: "Basic screening panel at 1, 2, and 3 years after IIM onset", items: basic_screening_panel }
+          );
+          recommendation.content.additional.push(
+            "18F-FDG PET-CT (when recommended screenings above at IIM diagnosis do not detect cancer)",
+            "Upper GI endoscopy (when recommended screenings above at IIM diagnosis do not detect cancer)",
+            "Lower GI endoscopy (when recommended screenings above at IIM diagnosis do not detect cancer)"
+          );
+        } else if (risk_category === "Moderate risk of IIM-related cancer") {
+          recommendation.content.timeOfDiagnosis.push(
+            { title: "Basic screening panel", items: basic_screening_panel },
+            { title: "Enhanced screening panel", items: enhanced_screening_panel }
+          );
+          recommendation.content.followUp.push("None");
+        } else {
+          recommendation.content.timeOfDiagnosis.push({ title: "Basic screening panel", items: basic_screening_panel });
+          recommendation.content.followUp.push("None");
+        }
+
+        if (npcRegionChecked) {
+          recommendation.content.additional.push("Nasoendoscopy at time of diagnosis");
+        }
+
+        return recommendation;
+      }
+
+      function RiskFactorGroup({ title, hint, high, intermediate, low, selectedIds, onToggle }) {
+        return React.createElement(
+          "div",
+          { className: "groupRow" },
+          React.createElement(
+            "div",
+            { className: "groupLabel" },
+            React.createElement("div", { className: "name" }, title),
+            React.createElement("div", { className: "hint" }, hint)
+          ),
+          React.createElement("div", { className: "groupCell" }, React.createElement(FactorChecks, { factors: high, selectedIds, onToggle })),
+          React.createElement(
+            "div",
+            { className: "groupCell" },
+            React.createElement(FactorChecks, { factors: intermediate, selectedIds, onToggle })
+          ),
+          React.createElement("div", { className: "groupCell" }, React.createElement(FactorChecks, { factors: low, selectedIds, onToggle }))
+        );
+      }
+
+      function FactorChecks({ factors, selectedIds, onToggle }) {
+        if (!factors.length) return React.createElement("div", { className: "helper" }, "—");
+        return React.createElement(
+          "div",
+          { className: "checks" },
+          factors.map((f) =>
+            React.createElement(
+              "label",
+              { key: f.id, className: "check" },
+              React.createElement("input", {
+                type: "checkbox",
+                checked: selectedIds.has(f.id),
+                onChange: () => onToggle(f.id),
+              }),
+              React.createElement("div", { className: "labelText" }, f.label)
+            )
+          )
+        );
+      }
+
+      function OutputSection({ title, children }) {
+        return React.createElement(
+          React.Fragment,
+          null,
+          React.createElement("h3", null, title),
+          children
+        );
+      }
+
+      function PanelList({ title, items }) {
+        return React.createElement(
+          "div",
+          null,
+          React.createElement("div", { className: "subListTitle" }, title),
+          React.createElement(
+            "ul",
+            { className: "bullets" },
+            items.map((x) => React.createElement("li", { key: x }, x))
+          )
+        );
+      }
+
+      function App() {
+        const [iimType, setIimType] = useState("adult_onset");
+        const [yearsInput, setYearsInput] = useState("");
+        const [npcRegionChecked, setNpcRegionChecked] = useState(false);
+        const [selectedIds, setSelectedIds] = useState(() => new Set());
+
+        const yearsSinceOnset = useMemo(() => {
+          const trimmed = String(yearsInput).trim();
+          if (!trimmed) return null;
+          const n = Number(trimmed);
+          if (!Number.isFinite(n)) return null;
+          return n;
+        }, [yearsInput]);
+
+        const grouped = useMemo(() => {
+          const byRow = new Map();
+          for (const f of RISK_FACTORS) {
+            if (!byRow.has(f.row)) byRow.set(f.row, []);
+            byRow.get(f.row).push(f);
+          }
+          const rows = ["IIM subtype", "MSA and MAA", "Clinical features"].map((row) => {
+            const factors = byRow.get(row) || [];
+            return {
+              row,
+              high: factors.filter((f) => f.column === "high_risk"),
+              intermediate: factors.filter((f) => f.column === "intermediate_risk"),
+              low: factors.filter((f) => f.column === "low_risk"),
+            };
+          });
+          return rows;
+        }, []);
+
+        const recommendation = useMemo(
+          () =>
+            buildRecommendation({
+              iimType,
+              yearsSinceOnset,
+              selectedIds,
+              npcRegionChecked: iimType === "adult_onset" ? npcRegionChecked : false,
+            }),
+          [iimType, yearsSinceOnset, selectedIds, npcRegionChecked]
+        );
+
+        const counts = recommendation.mode === "adult" ? recommendation.counts : { high_risk_count: 0, intermediate_risk_count: 0, low_risk_count: 0 };
+
+        function toggleFactor(id) {
+          setSelectedIds((prev) => {
+            const next = new Set(prev);
+            if (next.has(id)) next.delete(id);
+            else next.add(id);
+            return next;
+          });
+        }
+
+        function resetAdultInputs() {
+          setSelectedIds(new Set());
+          setNpcRegionChecked(false);
+        }
+
+        const riskPillClass =
+          recommendation.mode !== "adult"
+            ? "riskPill na"
+            : recommendation.riskCategory.startsWith("High")
+              ? "riskPill high"
+              : recommendation.riskCategory.startsWith("Moderate")
+                ? "riskPill moderate"
+                : "riskPill standard";
+
+        return React.createElement(
+          "div",
+          { className: "container" },
+          React.createElement(
+            "div",
+            { className: "topbar" },
+            React.createElement(
+              "div",
+              { className: "brand" },
+              React.createElement("div", { className: "title" }, "IIM-associated cancer screening"),
+              React.createElement(
+                "div",
+                { className: "subtitle" },
+                "Cancer screening recommendations for idiopathic inflammatory myopathies based on International Myositis Assessment and Clinical Studies Group (IMACS) guidelines."
+              )
+            )
+          ),
+
+          React.createElement(
+            "div",
+            { className: "grid" },
+            // Left: inputs
+            React.createElement(
+              "div",
+              { className: "card" },
+              React.createElement(
+                "div",
+                { className: "cardBody" },
+                React.createElement("div", { className: "sectionTitle" }, "Step 1: IIM type"),
+                React.createElement(
+                  "div",
+                  { className: "segmented", role: "tablist", "aria-label": "IIM type" },
+                  React.createElement(
+                    "button",
+                    {
+                      className: iimType === "juvenile_onset" ? "active" : "",
+                      onClick: () => {
+                        setIimType("juvenile_onset");
+                        resetAdultInputs();
+                      },
+                      type: "button",
+                    },
+                    "Juvenile-onset IIM"
+                  ),
+                  React.createElement(
+                    "button",
+                    {
+                      className: iimType === "adult_onset" ? "active" : "",
+                      onClick: () => setIimType("adult_onset"),
+                      type: "button",
+                    },
+                    "Adult-onset IIM"
+                  ),
+                  React.createElement(
+                    "button",
+                    {
+                      className: iimType === "inclusion_body_myositis" ? "active" : "",
+                      onClick: () => {
+                        setIimType("inclusion_body_myositis");
+                        resetAdultInputs();
+                      },
+                      type: "button",
+                    },
+                    "IBM"
+                  )
+                ),
+
+                React.createElement("div", { className: "divider" }),
+
+                React.createElement(
+                  "div",
+                  null,
+                  React.createElement(
+                    "div",
+                    { className: "field" },
+                    React.createElement("label", { className: "small", htmlFor: "years" }, "Time since symptom onset (years, optional)"),
+                    React.createElement("input", {
+                      id: "years",
+                      className: "control",
+                      inputMode: "decimal",
+                      placeholder: "e.g., 2.5",
+                      value: yearsInput,
+                      onChange: (e) => setYearsInput(e.target.value),
+                    })
+                  ),
+                  React.createElement(
+                    "div",
+                    { className: "field", style: { marginTop: 12 } },
+                    React.createElement("label", { className: "small" }, "Special region (optional)"),
+                    React.createElement(
+                      "label",
+                      { className: "check", style: { margin: 0 } },
+                      React.createElement("input", {
+                        type: "checkbox",
+                        checked: npcRegionChecked,
+                        disabled: iimType !== "adult_onset",
+                        onChange: () => setNpcRegionChecked((v) => !v),
+                      }),
+                      React.createElement(
+                        "div",
+                        { className: "labelText" },
+                        "Geographic region/ancestry with increased nasopharyngeal cancer risk (e.g., East or Southeast Asian)"
+                      )
+                    ),
+                    null
+                  )
+                ),
+
+                recommendation.timeSinceNote
+                  ? React.createElement(
+                      "div",
+                      { className: "callout", role: "note" },
+                      "Guidelines only apply to IIM patients diagnosed within 3 years of symptom onset. Recommendations do not apply to those diagnosed after this time period."
+                    )
+                  : null,
+
+                iimType === "adult_onset"
+                  ? React.createElement(
+                      React.Fragment,
+                      null,
+                      React.createElement("div", { className: "divider" }),
+                      React.createElement(
+                        "div",
+                        { className: "sectionTitleRow" },
+                        React.createElement("div", { className: "sectionTitle" }, "Step 2: Risk factors (toggle any that apply)"),
+                        React.createElement(
+                          "div",
+                          { className: "subtleCounts", "aria-label": "Selected risk factor counts" },
+                          React.createElement("span", { className: "badge" }, React.createElement("span", { className: "dot high" }), "High: ", counts.high_risk_count),
+                          React.createElement(
+                            "span",
+                            { className: "badge" },
+                            React.createElement("span", { className: "dot intermediate" }),
+                            "Intermediate: ",
+                            counts.intermediate_risk_count
+                          ),
+                          React.createElement("span", { className: "badge" }, React.createElement("span", { className: "dot low" }), "Low: ", counts.low_risk_count)
+                        )
+                      ),
+                      React.createElement(
+                        "div",
+                        { className: "riskTable" },
+                        React.createElement(
+                          "div",
+                          { className: "riskTableHeader" },
+                          React.createElement("div", null, "Row category"),
+                          React.createElement("div", { className: "colHigh" }, "High risk"),
+                          React.createElement("div", { className: "colInter" }, "Intermediate risk"),
+                          React.createElement("div", { className: "colLow" }, "Low risk")
+                        ),
+                        React.createElement(RiskFactorGroup, {
+                          title: "IIM subtype",
+                          hint: "Select subtype risk factor(s) if applicable.",
+                          high: grouped.find((r) => r.row === "IIM subtype").high,
+                          intermediate: grouped.find((r) => r.row === "IIM subtype").intermediate,
+                          low: grouped.find((r) => r.row === "IIM subtype").low,
+                          selectedIds,
+                          onToggle: toggleFactor,
+                        }),
+                        React.createElement(RiskFactorGroup, {
+                          title: "MSA and MAA",
+                          hint: "Myositis-specific and -associated antibodies.",
+                          high: grouped.find((r) => r.row === "MSA and MAA").high,
+                          intermediate: grouped.find((r) => r.row === "MSA and MAA").intermediate,
+                          low: grouped.find((r) => r.row === "MSA and MAA").low,
+                          selectedIds,
+                          onToggle: toggleFactor,
+                        }),
+                        React.createElement(RiskFactorGroup, {
+                          title: "Clinical features",
+                          hint: "Clinical risk modifiers at/around onset.",
+                          high: grouped.find((r) => r.row === "Clinical features").high,
+                          intermediate: grouped.find((r) => r.row === "Clinical features").intermediate,
+                          low: grouped.find((r) => r.row === "Clinical features").low,
+                          selectedIds,
+                          onToggle: toggleFactor,
+                        })
+                      )
+                    )
+                  : React.createElement(
+                      "div",
+                      { className: "tinyNote" },
+                      "Adult risk factor calculator is hidden for Juvenile-onset IIM and IBM because cancer screening is not routinely required."
+                    ),
+
+                React.createElement(
+                  "div",
+                  { className: "footerNote" },
+                  null
+                )
+              )
+            ),
+
+            // Right: output
+            React.createElement(
+              "div",
+              { className: "card outputCard" },
+              React.createElement(
+                "div",
+                { className: "cardHeader" },
+                React.createElement(
+                  "div",
+                  { className: "outputHeader" },
+                  React.createElement("h2", null, "Recommendation"),
+                  React.createElement(
+                    "div",
+                    { className: riskPillClass },
+                    recommendation.mode === "adult" ? recommendation.riskCategory : "No routine screening"
+                  )
+                )
+              ),
+              React.createElement(
+                "div",
+                { className: "cardBody outputBody" },
+                recommendation.mode !== "adult"
+                  ? React.createElement(
+                      React.Fragment,
+                      null,
+                      React.createElement("p", null, recommendation.content.summary),
+                      recommendation.timeSinceNote
+                        ? React.createElement(
+                            "div",
+                            { className: "callout", role: "note" },
+                            "Guidelines only apply to IIM patients diagnosed within 3 years of symptom onset. Recommendations do not apply to those diagnosed after this time period."
+                          )
+                        : null,
+                      null
+                    )
+                  : React.createElement(
+                      React.Fragment,
+                      null,
+                      React.createElement(
+                        "div",
+                        { className: "recommendationFocus" },
+                        React.createElement(
+                          "div",
+                          { className: "bubbleGrid" },
+                          React.createElement(
+                            "div",
+                            { className: "bubble" },
+                            React.createElement("div", { className: "bubbleTitle" }, "Screening at time of diagnosis"),
+                            React.createElement(
+                              "ul",
+                              { className: "miniBullets" },
+                              recommendation.content.timeOfDiagnosis.length === 2
+                                ? [
+                                    React.createElement(
+                                      "li",
+                                      { key: recommendation.content.timeOfDiagnosis[0].title },
+                                      recommendation.content.timeOfDiagnosis[0].title
+                                    ),
+                                    React.createElement("li", { key: "and", className: "andRow", "aria-hidden": "true" }, "AND"),
+                                    React.createElement(
+                                      "li",
+                                      { key: recommendation.content.timeOfDiagnosis[1].title },
+                                      recommendation.content.timeOfDiagnosis[1].title
+                                    ),
+                                  ]
+                                : recommendation.content.timeOfDiagnosis.map((panel) =>
+                                    React.createElement("li", { key: panel.title }, panel.title)
+                                  )
+                            ),
+                            React.createElement("div", { className: "helper bubbleHelper" }, "Panel contents listed below.")
+                          ),
+                          React.createElement(
+                            "div",
+                            { className: "bubble" },
+                            React.createElement("div", { className: "bubbleTitle" }, "Screening at follow-up"),
+                            Array.isArray(recommendation.content.followUp) &&
+                            recommendation.content.followUp.length === 1 &&
+                            recommendation.content.followUp[0] === "None"
+                              ? React.createElement("p", null, "None")
+                              : React.createElement(
+                                  "ul",
+                                  { className: "miniBullets" },
+                                  recommendation.content.followUp.map((entry) =>
+                                    typeof entry === "string"
+                                      ? React.createElement("li", { key: entry }, entry)
+                                      : React.createElement("li", { key: entry.title }, entry.title)
+                                  )
+                                ),
+                            Array.isArray(recommendation.content.followUp) &&
+                            recommendation.content.followUp.length === 1 &&
+                            recommendation.content.followUp[0] === "None"
+                              ? null
+                              : React.createElement("div", { className: "helper bubbleHelper" }, "Panel contents listed below.")
+                          )
+                        ),
+
+                        React.createElement(
+                          OutputSection,
+                          { title: "Additional screening to consider" },
+                          recommendation.content.additional.length
+                            ? React.createElement(
+                                "ul",
+                                { className: "bullets" },
+                                recommendation.content.additional.map((x) => React.createElement("li", { key: x }, x))
+                              )
+                            : React.createElement("p", null, "None")
+                        ),
+                        React.createElement(
+                          "div",
+                          { className: "helper", style: { marginTop: 10 } },
+                          "Note: all patients with IIM, irrespective of cancer risk, should continue country- or region-specific age- and sex-appropriate routine population cancer screening."
+                        )
+                      ),
+
+                      React.createElement("div", { className: "divider" }),
+                      React.createElement("h3", null, "Screening panel contents"),
+                      React.createElement(
+                        "div",
+                        { className: "bubbleGrid" },
+                        React.createElement(
+                          "div",
+                          { className: "bubble" },
+                          React.createElement(PanelList, { title: "Basic screening panel", items: basic_screening_panel })
+                        ),
+                        React.createElement(
+                          "div",
+                          { className: "bubble" },
+                          React.createElement(PanelList, { title: "Enhanced screening panel", items: enhanced_screening_panel })
+                        )
+                      ),
+
+                      recommendation.timeSinceNote
+                        ? React.createElement(
+                            "div",
+                            { className: "callout", role: "note" },
+                            "Guidelines only apply to IIM patients diagnosed within 3 years of symptom onset. Recommendations do not apply to those diagnosed after this time period."
+                          )
+                        : null,
+                    )
+              )
+            )
+          )
+        );
+      }
+
+      createRoot(document.getElementById("root")).render(React.createElement(App));
+    </script>
+  </body>
+</html>
+
