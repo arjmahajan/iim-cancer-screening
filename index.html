@@ -867,14 +867,11 @@
         return nodes;
       }
 
-      function buildRecommendation({ iimType, yearsSinceOnset, selectedIds, npcRegionChecked }) {
-        const applyWithin3YearsNote = Number.isFinite(yearsSinceOnset) && yearsSinceOnset > 3;
-
+      function buildRecommendation({ iimType, selectedIds, npcRegionChecked }) {
         if (iimType === "juvenile_onset") {
           return {
             mode: "no_routine",
             riskCategory: "Not applicable",
-            timeSinceNote: applyWithin3YearsNote,
           };
         }
 
@@ -882,7 +879,6 @@
           return {
             mode: "no_routine",
             riskCategory: "Not applicable",
-            timeSinceNote: applyWithin3YearsNote,
           };
         }
 
@@ -902,7 +898,6 @@
         const recommendation = {
           mode: "adult",
           riskCategory: risk_category,
-          timeSinceNote: applyWithin3YearsNote,
           counts: { high_risk_count, intermediate_risk_count, low_risk_count },
           petAlternativeAtDiagnosis: false,
           content: {
@@ -1031,17 +1026,8 @@
 
       function App() {
         const [iimType, setIimType] = useState("adult_onset");
-        const [yearsInput, setYearsInput] = useState("");
         const [npcRegionChecked, setNpcRegionChecked] = useState(false);
         const [selectedIds, setSelectedIds] = useState(() => new Set());
-
-        const yearsSinceOnset = useMemo(() => {
-          const trimmed = String(yearsInput).trim();
-          if (!trimmed) return null;
-          const n = Number(trimmed);
-          if (!Number.isFinite(n)) return null;
-          return n;
-        }, [yearsInput]);
 
         const grouped = useMemo(() => {
           const byRow = new Map();
@@ -1065,11 +1051,10 @@
           () =>
             buildRecommendation({
               iimType,
-              yearsSinceOnset,
               selectedIds,
               npcRegionChecked: iimType === "adult_onset" ? npcRegionChecked : false,
             }),
-          [iimType, yearsSinceOnset, selectedIds, npcRegionChecked]
+          [iimType, selectedIds, npcRegionChecked]
         );
 
         const counts = recommendation.mode === "adult" ? recommendation.counts : { high_risk_count: 0, intermediate_risk_count: 0, low_risk_count: 0 };
@@ -1223,19 +1208,6 @@
                   React.createElement(
                     "div",
                     { className: "field" },
-                    React.createElement("label", { className: "small", htmlFor: "years" }, "Time since symptom onset (years, optional)"),
-                    React.createElement("input", {
-                      id: "years",
-                      className: "control",
-                      inputMode: "decimal",
-                      placeholder: "e.g., 2.5",
-                      value: yearsInput,
-                      onChange: (e) => setYearsInput(e.target.value),
-                    })
-                  ),
-                  React.createElement(
-                    "div",
-                    { className: "field", style: { marginTop: 12 } },
                     React.createElement("label", { className: "small" }, "Special region (optional)"),
                     React.createElement(
                       "label",
@@ -1255,14 +1227,6 @@
                     null
                   )
                 ),
-
-                recommendation.timeSinceNote
-                  ? React.createElement(
-                      "div",
-                      { className: "callout", role: "note" },
-                      "Guidelines only apply to IIM patients diagnosed within 3 years of symptom onset. Recommendations do not apply to those diagnosed after this time period."
-                    )
-                  : null,
 
                 iimType === "adult_onset"
                   ? React.createElement(
@@ -1370,14 +1334,7 @@
                         "div",
                         { className: "helper", style: { marginTop: 10 } },
                         "Note: all patients with IIM, irrespective of cancer risk, should continue country- or region-specific age- and sex-appropriate routine population cancer screening."
-                      ),
-                      recommendation.timeSinceNote
-                        ? React.createElement(
-                            "div",
-                            { className: "callout", role: "note" },
-                            "Guidelines only apply to IIM patients diagnosed within 3 years of symptom onset. Recommendations do not apply to those diagnosed after this time period."
-                          )
-                        : null
+                      )
                     )
                   : React.createElement(
                       React.Fragment,
@@ -1532,13 +1489,7 @@
                         )
                       ),
 
-                      recommendation.timeSinceNote
-                        ? React.createElement(
-                            "div",
-                            { className: "callout", role: "note" },
-                            "Guidelines only apply to IIM patients diagnosed within 3 years of symptom onset. Recommendations do not apply to those diagnosed after this time period."
-                          )
-                        : null,
+                      null,
                     )
               )
             )
