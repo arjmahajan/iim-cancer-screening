@@ -6,7 +6,7 @@
     <title>IIM-associated cancer screening</title>
     <meta
       name="description"
-      content="Cancer screening recommendations for idiopathic inflammatory myopathies (IIM)."
+      content="Cancer screening recommendations for idiopathic inflammatory myopathies (IIMs) based on International Myositis Assessment and Clinical Studies Group (IMACS) guidelines."
     />
 
     <style>
@@ -83,7 +83,7 @@
       }
 
       .title {
-        font-size: clamp(20px, 2.4vw, 28px);
+        font-size: clamp(22px, 2.7vw, 32px);
         font-weight: 760;
         letter-spacing: -0.02em;
         line-height: 1.1;
@@ -94,6 +94,72 @@
         line-height: 1.4;
         font-size: 14px;
         max-width: 66ch;
+      }
+
+      .introGuidanceBox {
+        margin-top: 12px;
+        max-width: 78ch;
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 12px 12px;
+        border-radius: 14px;
+        border: 1px solid rgba(251, 191, 36, 0.35);
+        background: linear-gradient(180deg, rgba(255, 247, 237, 0.95), rgba(255, 237, 213, 0.55));
+        box-shadow: 0 1px 0 rgba(2, 6, 23, 0.03);
+      }
+
+      .introGuidanceBulb {
+        width: 18px;
+        height: 18px;
+        flex: 0 0 auto;
+        margin-top: 1px;
+        color: rgba(217, 119, 6, 0.95);
+      }
+
+      .introGuidanceBulb svg {
+        display: block;
+        width: 18px;
+        height: 18px;
+      }
+
+      .introGuidance {
+        flex: 1 1 auto;
+        min-width: 0;
+        color: #0b1220;
+        font-size: 13px;
+        line-height: 1.45;
+        font-weight: 520;
+      }
+
+      .introGuidanceStrong {
+        font-weight: 780;
+      }
+
+      .introGuidanceRest {
+        font-weight: 520;
+        color: rgba(15, 23, 42, 0.86);
+      }
+
+      .pageCitation {
+        margin-top: 14px;
+        padding-top: 12px;
+        border-top: 1px solid var(--border);
+        color: var(--muted-2);
+        font-size: 12px;
+        line-height: 1.45;
+        max-width: 110ch;
+      }
+
+      .pageCitation a {
+        color: inherit;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        font-weight: 650;
+      }
+
+      .pageCitation a:hover {
+        color: var(--text);
       }
 
       .pill {
@@ -586,6 +652,80 @@
         font-size: 11px;
       }
 
+      .diagPathAltGrid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        align-items: stretch;
+        justify-items: stretch;
+      }
+
+      @media (min-width: 720px) {
+        .diagPathAltGrid {
+          grid-template-columns: 1fr auto 1fr;
+          align-items: stretch;
+        }
+      }
+
+      .outputBody sup,
+      .miniBullets sup,
+      .bullets sup {
+        font-size: 0.75em;
+        line-height: 0;
+      }
+
+      .orDivider {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 6px 0;
+        color: rgba(15, 23, 42, 0.72);
+        font-weight: 850;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-size: 11px;
+        user-select: none;
+      }
+
+      .orDivider::before,
+      .orDivider::after {
+        content: "";
+        height: 1px;
+        width: 34px;
+        background: rgba(148, 163, 184, 0.65);
+      }
+
+      @media (min-width: 720px) {
+        .orDivider {
+          flex-direction: column;
+          padding: 0 6px;
+          gap: 10px;
+        }
+
+        .orDivider::before,
+        .orDivider::after {
+          width: 1px;
+          height: 34px;
+        }
+      }
+
+      .bubbleGridPetAlt {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      }
+
+      @media (max-width: 899px) {
+        .bubbleGridPetAlt {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (min-width: 900px) {
+        .bubbleGridPetAlt {
+          grid-template-columns: minmax(0, 1.85fr) minmax(0, 1fr);
+        }
+      }
+
       .bullets {
         margin: 0;
         padding-left: 18px;
@@ -634,26 +774,41 @@
       import React, { useMemo, useState } from "https://esm.sh/react@18.3.1";
       import { createRoot } from "https://esm.sh/react-dom@18.3.1/client";
 
+      const MSA_MAA_ROW =
+        "Myositis-specific antibodies (MSA) and myositis-associated antibodies (MAA)";
+
+      const PET_SINGLE_SCREENING_EXTRA_HIGH_CLINICAL_IDS = [
+        "clinical_persistent_high_disease_activity_despite_therapy",
+        "clinical_dysphagia_moderate_to_severe",
+        "clinical_cutaneous_necrosis",
+      ];
+
       const RISK_FACTORS = [
         { id: "iim_subtype_dermatomyositis", label: "Dermatomyositis", row: "IIM subtype", column: "high_risk" },
-        { id: "iim_subtype_cadm", label: "CADM", row: "IIM subtype", column: "intermediate_risk" },
+        { id: "iim_subtype_cadm", label: "Clinically amyopathic dermatomyositis (CADM)", row: "IIM subtype", column: "intermediate_risk" },
         { id: "iim_subtype_polymyositis", label: "Polymyositis", row: "IIM subtype", column: "intermediate_risk" },
-        { id: "iim_subtype_imnm", label: "IMNM", row: "IIM subtype", column: "intermediate_risk" },
-        { id: "iim_subtype_assd", label: "ASSD", row: "IIM subtype", column: "low_risk" },
-        { id: "iim_subtype_ctd_associated_iim", label: "CTD-associated IIM", row: "IIM subtype", column: "low_risk" },
-        { id: "msa_maa_anti_tif1_gamma", label: "Anti-TIF1-γ antibodies", row: "MSA and MAA", column: "high_risk" },
-        { id: "msa_maa_anti_nxp2", label: "Anti-NXP2 antibodies", row: "MSA and MAA", column: "high_risk" },
-        { id: "msa_maa_anti_sae1", label: "Anti-SAE1 antibodies", row: "MSA and MAA", column: "intermediate_risk" },
-        { id: "msa_maa_anti_hmgcr", label: "Anti-HMGCR antibodies", row: "MSA and MAA", column: "intermediate_risk" },
-        { id: "msa_maa_anti_mi2", label: "Anti-Mi2 antibodies", row: "MSA and MAA", column: "intermediate_risk" },
-        { id: "msa_maa_anti_mda5", label: "Anti-MDA5 antibodies", row: "MSA and MAA", column: "intermediate_risk" },
-        { id: "msa_maa_anti_srp", label: "Anti-SRP antibodies", row: "MSA and MAA", column: "low_risk" },
-        { id: "msa_maa_anti_jo1", label: "Anti-Jo1 antibodies", row: "MSA and MAA", column: "low_risk" },
-        { id: "msa_maa_non_jo1_assd_antibodies", label: "Non-Jo1 ASSD antibodies", row: "MSA and MAA", column: "low_risk" },
+        { id: "iim_subtype_imnm", label: "Immune-mediated necrotizing myopathy (IMNM)", row: "IIM subtype", column: "intermediate_risk" },
+        { id: "iim_subtype_assd", label: "Antisynthetase syndrome (ASSD)", row: "IIM subtype", column: "low_risk" },
+        { id: "iim_subtype_ctd_associated_iim", label: "Connective tissue disease (CTD)-associated IIM", row: "IIM subtype", column: "low_risk" },
+        { id: "msa_maa_anti_tif1_gamma", label: "Anti-TIF1-γ antibodies", row: MSA_MAA_ROW, column: "high_risk" },
+        { id: "msa_maa_anti_nxp2", label: "Anti-NXP2 antibodies", row: MSA_MAA_ROW, column: "high_risk" },
+        { id: "msa_maa_anti_sae1", label: "Anti-SAE1 antibodies", row: MSA_MAA_ROW, column: "intermediate_risk" },
+        { id: "msa_maa_anti_hmgcr", label: "Anti-HMGCR antibodies", row: MSA_MAA_ROW, column: "intermediate_risk" },
+        { id: "msa_maa_anti_mi2", label: "Anti-Mi2 antibodies", row: MSA_MAA_ROW, column: "intermediate_risk" },
+        { id: "msa_maa_anti_mda5", label: "Anti-MDA5 antibodies", row: MSA_MAA_ROW, column: "intermediate_risk" },
+        { id: "msa_maa_anti_srp", label: "Anti-SRP antibodies", row: MSA_MAA_ROW, column: "low_risk" },
+        { id: "msa_maa_anti_jo1", label: "Anti-Jo1 antibodies", row: MSA_MAA_ROW, column: "low_risk" },
+        {
+          id: "msa_maa_non_jo1_assd_antibodies",
+          label: "Non-Jo-1 antisynthetase antibodies (e.g., PL-7, PL-12, EJ, OJ)",
+          row: MSA_MAA_ROW,
+          column: "low_risk",
+        },
         {
           id: "msa_maa_maa",
-          label: "MAA (Anti-PM-Scl, anti-Ku, anti-RNP, anti-SSA/Ro, or anti-SSB/La antibodies)",
-          row: "MSA and MAA",
+          label:
+            "Myositis-associated antibodies (Anti-PM-Scl, anti-Ku, anti-RNP, anti-SSA/Ro, or anti-SSB/La)",
+          row: MSA_MAA_ROW,
           column: "low_risk",
         },
         { id: "clinical_age_over_40_at_onset", label: "Age >40 years at IIM onset", row: "Clinical features", column: "high_risk" },
@@ -693,6 +848,25 @@
         "Faecal occult blood",
       ];
 
+      function renderTextWithFDGSuperscript(text) {
+        if (typeof text !== "string") return [text];
+        const re = /18F([\u002D\u2010\u2011\u2012\u2013\u2014\u2015\u2212]|\s)FDG/gi;
+        const nodes = [];
+        let lastIndex = 0;
+        let match;
+        while ((match = re.exec(text)) !== null) {
+          if (match.index > lastIndex) {
+            nodes.push(text.slice(lastIndex, match.index));
+          }
+          const sep = match[1] || "-";
+          nodes.push(React.createElement("sup", null, "18"), "F", sep, "FDG");
+          lastIndex = re.lastIndex;
+        }
+        if (lastIndex === 0) return [text];
+        if (lastIndex < text.length) nodes.push(text.slice(lastIndex));
+        return nodes;
+      }
+
       function buildRecommendation({ iimType, yearsSinceOnset, selectedIds, npcRegionChecked }) {
         const applyWithin3YearsNote = Number.isFinite(yearsSinceOnset) && yearsSinceOnset > 3;
 
@@ -701,9 +875,6 @@
             mode: "no_routine",
             riskCategory: "Not applicable",
             timeSinceNote: applyWithin3YearsNote,
-            content: {
-              summary: "Cancer screening not routinely required.",
-            },
           };
         }
 
@@ -712,9 +883,6 @@
             mode: "no_routine",
             riskCategory: "Not applicable",
             timeSinceNote: applyWithin3YearsNote,
-            content: {
-              summary: "Cancer screening not routinely required.",
-            },
           };
         }
 
@@ -736,6 +904,7 @@
           riskCategory: risk_category,
           timeSinceNote: applyWithin3YearsNote,
           counts: { high_risk_count, intermediate_risk_count, low_risk_count },
+          petAlternativeAtDiagnosis: false,
           content: {
             timeOfDiagnosis: [],
             followUp: [],
@@ -766,6 +935,22 @@
           recommendation.content.timeOfDiagnosis.push({ title: "Basic screening panel", items: basic_screening_panel });
           recommendation.content.followUp.push("None");
         }
+
+        const hasBasicAndEnhancedAtDiagnosis =
+          recommendation.content.timeOfDiagnosis.length === 2 &&
+          recommendation.content.timeOfDiagnosis.some((p) => p.title === "Basic screening panel") &&
+          recommendation.content.timeOfDiagnosis.some((p) => p.title === "Enhanced screening panel");
+
+        const extraHighClinicalSelectedCount = PET_SINGLE_SCREENING_EXTRA_HIGH_CLINICAL_IDS.filter((id) =>
+          selectedIds.has(id)
+        ).length;
+
+        recommendation.petAlternativeAtDiagnosis =
+          hasBasicAndEnhancedAtDiagnosis &&
+          selectedIds.has("iim_subtype_dermatomyositis") &&
+          selectedIds.has("msa_maa_anti_tif1_gamma") &&
+          selectedIds.has("clinical_age_over_40_at_onset") &&
+          extraHighClinicalSelectedCount >= 1;
 
         if (npcRegionChecked) {
           recommendation.content.additional.push("Nasoendoscopy at time of diagnosis");
@@ -864,7 +1049,7 @@
             if (!byRow.has(f.row)) byRow.set(f.row, []);
             byRow.get(f.row).push(f);
           }
-          const rows = ["IIM subtype", "MSA and MAA", "Clinical features"].map((row) => {
+          const rows = ["IIM subtype", MSA_MAA_ROW, "Clinical features"].map((row) => {
             const factors = byRow.get(row) || [];
             return {
               row,
@@ -925,7 +1110,58 @@
               React.createElement(
                 "div",
                 { className: "subtitle" },
-                "Cancer screening recommendations for idiopathic inflammatory myopathies based on International Myositis Assessment and Clinical Studies Group (IMACS) guidelines."
+                "Cancer screening recommendations for idiopathic inflammatory myopathies (IIMs) based on International Myositis Assessment and Clinical Studies Group (IMACS) guidelines."
+              ),
+              React.createElement(
+                "div",
+                { className: "introGuidanceBox" },
+                React.createElement(
+                  "div",
+                  { className: "introGuidanceBulb", "aria-hidden": "true", title: "Clinical note" },
+                  React.createElement(
+                    "svg",
+                    { viewBox: "0 0 24 24", role: "img", focusable: "false" },
+                    React.createElement("path", {
+                      d: "M9 18h6v1a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-1Z",
+                      fill: "currentColor",
+                      opacity: "0.18",
+                    }),
+                    React.createElement("path", {
+                      d: "M9 18h6v1H9v-1Z",
+                      fill: "currentColor",
+                      opacity: "0.22",
+                    }),
+                    React.createElement("path", {
+                      d: "M12 3a6 6 0 0 1 3.2 11.1c.5.5.8 1.2.8 1.9v.5H8v-.5c0-.7.3-1.4.8-1.9A6 6 0 0 1 12 3Z",
+                      fill: "none",
+                      stroke: "currentColor",
+                      strokeWidth: "1.6",
+                      strokeLinejoin: "round",
+                    }),
+                    React.createElement("path", {
+                      d: "M10 15.5h4",
+                      fill: "none",
+                      stroke: "currentColor",
+                      strokeWidth: "1.6",
+                      strokeLinecap: "round",
+                    })
+                  )
+                ),
+                React.createElement(
+                  "div",
+                  { className: "introGuidance" },
+                  React.createElement(
+                    "span",
+                    { className: "introGuidanceStrong" },
+                    "These guidelines apply to IIM patients diagnosed within 3 years of symptom onset."
+                  ),
+                  " ",
+                  React.createElement(
+                    "span",
+                    { className: "introGuidanceRest" },
+                    "Evidence supporting these recommendations is largely limited to this time period. However, at clinician discretion, these recommendations may still be considered when evaluating patients outside this window."
+                  )
+                )
               )
             )
           ),
@@ -975,7 +1211,7 @@
                       },
                       type: "button",
                     },
-                    "IBM"
+                    "Inclusion body myositis (IBM)"
                   )
                 ),
 
@@ -1072,11 +1308,11 @@
                           onToggle: toggleFactor,
                         }),
                         React.createElement(RiskFactorGroup, {
-                          title: "MSA and MAA",
-                          hint: "Myositis-specific and -associated antibodies.",
-                          high: grouped.find((r) => r.row === "MSA and MAA").high,
-                          intermediate: grouped.find((r) => r.row === "MSA and MAA").intermediate,
-                          low: grouped.find((r) => r.row === "MSA and MAA").low,
+                          title: "Antibodies",
+                          hint: "Myositis-specific antibodies (MSA) and myositis-associated antibodies (MAA).",
+                          high: grouped.find((r) => r.row === MSA_MAA_ROW).high,
+                          intermediate: grouped.find((r) => r.row === MSA_MAA_ROW).intermediate,
+                          low: grouped.find((r) => r.row === MSA_MAA_ROW).low,
                           selectedIds,
                           onToggle: toggleFactor,
                         }),
@@ -1094,7 +1330,7 @@
                   : React.createElement(
                       "div",
                       { className: "tinyNote" },
-                      "Adult risk factor calculator is hidden for Juvenile-onset IIM and IBM because cancer screening is not routinely required."
+                      "Risk factor calculator is not displayed for juvenile-onset IIM or inclusion body myositis (IBM), as IIM-associated cancer screening is not routinely recommended in these groups."
                     ),
 
                 React.createElement(
@@ -1130,15 +1366,18 @@
                   ? React.createElement(
                       React.Fragment,
                       null,
-                      React.createElement("p", null, recommendation.content.summary),
+                      React.createElement(
+                        "div",
+                        { className: "helper", style: { marginTop: 10 } },
+                        "Note: all patients with IIM, irrespective of cancer risk, should continue country- or region-specific age- and sex-appropriate routine population cancer screening."
+                      ),
                       recommendation.timeSinceNote
                         ? React.createElement(
                             "div",
                             { className: "callout", role: "note" },
                             "Guidelines only apply to IIM patients diagnosed within 3 years of symptom onset. Recommendations do not apply to those diagnosed after this time period."
                           )
-                        : null,
-                      null
+                        : null
                     )
                   : React.createElement(
                       React.Fragment,
@@ -1148,33 +1387,88 @@
                         { className: "recommendationFocus" },
                         React.createElement(
                           "div",
-                          { className: "bubbleGrid" },
+                          {
+                            className: recommendation.petAlternativeAtDiagnosis ? "bubbleGrid bubbleGridPetAlt" : "bubbleGrid",
+                          },
                           React.createElement(
                             "div",
                             { className: "bubble" },
                             React.createElement("div", { className: "bubbleTitle" }, "Screening at time of diagnosis"),
-                            React.createElement(
-                              "ul",
-                              { className: "miniBullets" },
-                              recommendation.content.timeOfDiagnosis.length === 2
-                                ? [
+                            recommendation.petAlternativeAtDiagnosis
+                              ? React.createElement(
+                                  React.Fragment,
+                                  null,
+                                  React.createElement(
+                                    "div",
+                                    { className: "diagPathAltGrid" },
                                     React.createElement(
-                                      "li",
-                                      { key: recommendation.content.timeOfDiagnosis[0].title },
-                                      recommendation.content.timeOfDiagnosis[0].title
+                                      "div",
+                                      { className: "diagPane" },
+                                      React.createElement(
+                                        "ul",
+                                        { className: "miniBullets" },
+                                        recommendation.content.timeOfDiagnosis.length === 2
+                                          ? [
+                                              React.createElement(
+                                                "li",
+                                                { key: recommendation.content.timeOfDiagnosis[0].title },
+                                                recommendation.content.timeOfDiagnosis[0].title
+                                              ),
+                                              React.createElement("li", { key: "and", className: "andRow", "aria-hidden": "true" }, "AND"),
+                                              React.createElement(
+                                                "li",
+                                                { key: recommendation.content.timeOfDiagnosis[1].title },
+                                                recommendation.content.timeOfDiagnosis[1].title
+                                              ),
+                                            ]
+                                          : recommendation.content.timeOfDiagnosis.map((panel) =>
+                                              React.createElement("li", { key: panel.title }, panel.title)
+                                            )
+                                      )
                                     ),
-                                    React.createElement("li", { key: "and", className: "andRow", "aria-hidden": "true" }, "AND"),
+                                    React.createElement("div", { className: "orDivider", "aria-hidden": "true" }, "OR"),
                                     React.createElement(
-                                      "li",
-                                      { key: recommendation.content.timeOfDiagnosis[1].title },
-                                      recommendation.content.timeOfDiagnosis[1].title
-                                    ),
-                                  ]
-                                : recommendation.content.timeOfDiagnosis.map((panel) =>
-                                    React.createElement("li", { key: panel.title }, panel.title)
-                                  )
-                            ),
-                            React.createElement("div", { className: "helper bubbleHelper" }, "Panel contents listed below.")
+                                      "div",
+                                      { className: "diagPane" },
+                                      React.createElement(
+                                        "ul",
+                                        { className: "miniBullets" },
+                                        React.createElement(
+                                          "li",
+                                          null,
+                                          ...renderTextWithFDGSuperscript("18F-FDG PET–CT as a single screening investigation")
+                                        )
+                                      )
+                                    )
+                                  ),
+                                  React.createElement("div", { className: "helper bubbleHelper" }, "Panel contents listed below.")
+                                )
+                              : React.createElement(
+                                  React.Fragment,
+                                  null,
+                                  React.createElement(
+                                    "ul",
+                                    { className: "miniBullets" },
+                                    recommendation.content.timeOfDiagnosis.length === 2
+                                      ? [
+                                          React.createElement(
+                                            "li",
+                                            { key: recommendation.content.timeOfDiagnosis[0].title },
+                                            recommendation.content.timeOfDiagnosis[0].title
+                                          ),
+                                          React.createElement("li", { key: "and", className: "andRow", "aria-hidden": "true" }, "AND"),
+                                          React.createElement(
+                                            "li",
+                                            { key: recommendation.content.timeOfDiagnosis[1].title },
+                                            recommendation.content.timeOfDiagnosis[1].title
+                                          ),
+                                        ]
+                                      : recommendation.content.timeOfDiagnosis.map((panel) =>
+                                          React.createElement("li", { key: panel.title }, panel.title)
+                                        )
+                                  ),
+                                  React.createElement("div", { className: "helper bubbleHelper" }, "Panel contents listed below.")
+                                )
                           ),
                           React.createElement(
                             "div",
@@ -1208,7 +1502,9 @@
                             ? React.createElement(
                                 "ul",
                                 { className: "bullets" },
-                                recommendation.content.additional.map((x) => React.createElement("li", { key: x }, x))
+                                recommendation.content.additional.map((x, idx) =>
+                                  React.createElement("li", { key: `${idx}-${x}` }, ...renderTextWithFDGSuperscript(x))
+                                )
                               )
                             : React.createElement("p", null, "None")
                         ),
@@ -1246,6 +1542,22 @@
                     )
               )
             )
+          ),
+
+          React.createElement(
+            "div",
+            { className: "pageCitation" },
+            "Oldroyd AGS, Callen JP, Chinoy H, et al. ",
+            React.createElement(
+              "a",
+              {
+                href: "https://doi.org/10.1038/s41584-023-01045-w",
+                target: "_blank",
+                rel: "noopener noreferrer",
+              },
+              "International Guideline for Idiopathic Inflammatory Myopathy-Associated Cancer Screening: an International Myositis Assessment and Clinical Studies Group (IMACS) initiative"
+            ),
+            ". Nat Rev Rheumatol. 2023;19(12):805-817. doi:10.1038/s41584-023-01045-w"
           )
         );
       }
