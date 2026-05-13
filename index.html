@@ -826,6 +826,8 @@
         { id: "clinical_interstitial_lung_disease", label: "Interstitial lung disease", row: "Clinical features", column: "low_risk" },
       ];
 
+      const IIM_SUBTYPE_IDS = RISK_FACTORS.filter((f) => f.row === "IIM subtype").map((f) => f.id);
+
       const basic_screening_panel = [
         "Comprehensive history",
         "Comprehensive physical examination",
@@ -1062,7 +1064,20 @@
         function toggleFactor(id) {
           setSelectedIds((prev) => {
             const next = new Set(prev);
-            if (next.has(id)) next.delete(id);
+            const isSubtype = IIM_SUBTYPE_IDS.includes(id);
+            const wasSelected = next.has(id);
+
+            if (isSubtype) {
+              if (wasSelected) {
+                next.delete(id);
+              } else {
+                for (const sid of IIM_SUBTYPE_IDS) next.delete(sid);
+                next.add(id);
+              }
+              return next;
+            }
+
+            if (wasSelected) next.delete(id);
             else next.add(id);
             return next;
           });
@@ -1264,7 +1279,7 @@
                         ),
                         React.createElement(RiskFactorGroup, {
                           title: "IIM subtype",
-                          hint: "Select subtype risk factor(s) if applicable.",
+                          hint: "Select IIM subtype.",
                           high: grouped.find((r) => r.row === "IIM subtype").high,
                           intermediate: grouped.find((r) => r.row === "IIM subtype").intermediate,
                           low: grouped.find((r) => r.row === "IIM subtype").low,
