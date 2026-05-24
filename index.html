@@ -1301,33 +1301,36 @@
                   )
                 ),
 
-                React.createElement("div", { className: "divider" }),
-
-                React.createElement(
-                  "div",
-                  null,
-                  React.createElement(
-                    "div",
-                    { className: "field" },
-                    React.createElement("label", { className: "small" }, "Special region (optional)"),
-                    React.createElement(
-                      "label",
-                      { className: "check", style: { margin: 0 } },
-                      React.createElement("input", {
-                        type: "checkbox",
-                        checked: npcRegionChecked,
-                        disabled: iimType !== "adult_onset",
-                        onChange: () => setNpcRegionChecked((v) => !v),
-                      }),
+                iimType === "adult_onset"
+                  ? React.createElement(
+                      React.Fragment,
+                      null,
+                      React.createElement("div", { className: "divider" }),
                       React.createElement(
                         "div",
-                        { className: "labelText" },
-                        "Geographic region/ancestry with increased nasopharyngeal cancer risk (e.g., East or Southeast Asian)"
+                        null,
+                        React.createElement(
+                          "div",
+                          { className: "field" },
+                          React.createElement("label", { className: "small" }, "Special region (optional)"),
+                          React.createElement(
+                            "label",
+                            { className: "check", style: { margin: 0 } },
+                            React.createElement("input", {
+                              type: "checkbox",
+                              checked: npcRegionChecked,
+                              onChange: () => setNpcRegionChecked((v) => !v),
+                            }),
+                            React.createElement(
+                              "div",
+                              { className: "labelText" },
+                              "Geographic region/ancestry with increased nasopharyngeal cancer risk (e.g., East or Southeast Asian)"
+                            )
+                          )
+                        )
                       )
-                    ),
-                    null
-                  )
-                ),
+                    )
+                  : null,
 
                 iimType === "adult_onset"
                   ? React.createElement(
@@ -1396,9 +1399,14 @@
                       )
                     )
                   : React.createElement(
-                      "div",
-                      { className: "tinyNote" },
-                      "Risk factor calculator is not displayed for juvenile-onset IIM or inclusion body myositis (IBM), as IIM-associated cancer screening is not routinely recommended in these groups."
+                      React.Fragment,
+                      null,
+                      React.createElement("div", { className: "divider" }),
+                      React.createElement(
+                        "div",
+                        { className: "tinyNote" },
+                        "Risk factor calculator is not displayed for juvenile-onset IIM or inclusion body myositis (IBM), as IIM-associated cancer screening is not routinely recommended in these groups."
+                      )
                     ),
 
                 React.createElement(
