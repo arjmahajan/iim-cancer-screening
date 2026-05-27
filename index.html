@@ -37,13 +37,13 @@
         --red: #dc2626;
 
         --risk-high-bg: rgba(254, 242, 242, 0.92);
-        --risk-high-border: rgba(252, 165, 165, 0.55);
+        --risk-high-border: rgba(248, 113, 113, 0.7);
         --risk-high-bg-hover: rgba(254, 226, 226, 0.95);
         --risk-inter-bg: rgba(255, 251, 235, 0.92);
-        --risk-inter-border: rgba(253, 230, 138, 0.58);
+        --risk-inter-border: rgba(251, 191, 36, 0.7);
         --risk-inter-bg-hover: rgba(254, 243, 199, 0.95);
         --risk-low-bg: rgba(240, 253, 244, 0.92);
-        --risk-low-border: rgba(134, 239, 172, 0.48);
+        --risk-low-border: rgba(74, 222, 128, 0.62);
         --risk-low-bg-hover: rgba(220, 252, 231, 0.95);
 
         --radius: 14px;
@@ -420,6 +420,19 @@
 
       .groupCell {
         padding: 10px 12px;
+      }
+
+      /* Column tinting (desktop): extend risk colors to entire column */
+      @media (min-width: 681px) {
+        .riskTable .groupCell.colHighCell {
+          background: rgba(254, 242, 242, 0.55);
+        }
+        .riskTable .groupCell.colInterCell {
+          background: rgba(255, 251, 235, 0.55);
+        }
+        .riskTable .groupCell.colLowCell {
+          background: rgba(240, 253, 244, 0.55);
+        }
       }
 
       .checks {
