@@ -261,6 +261,11 @@
         line-height: 1.4;
       }
 
+      .populationScreeningNote {
+        font-weight: 700;
+        color: rgba(15, 23, 42, 0.82);
+      }
+
       .row {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -712,6 +717,10 @@
       .recommendationFocus .bubbleHelper {
         margin-top: auto;
         padding-top: 10px;
+      }
+
+      .recommendationFocus .bubbleAdditional {
+        margin-top: 12px;
       }
 
       .bubbleGrid {
@@ -1345,37 +1354,6 @@
                       React.createElement("div", { className: "divider" }),
                       React.createElement(
                         "div",
-                        null,
-                        React.createElement(
-                          "div",
-                          { className: "field" },
-                          React.createElement("label", { className: "small" }, "Special region (optional)"),
-                          React.createElement(
-                            "label",
-                            { className: "check", style: { margin: 0 } },
-                            React.createElement("input", {
-                              type: "checkbox",
-                              checked: npcRegionChecked,
-                              onChange: () => setNpcRegionChecked((v) => !v),
-                            }),
-                            React.createElement(
-                              "div",
-                              { className: "labelText" },
-                              "Geographic region/ancestry with increased nasopharyngeal cancer risk (e.g., East or Southeast Asian)"
-                            )
-                          )
-                        )
-                      )
-                    )
-                  : null,
-
-                iimType === "adult_onset"
-                  ? React.createElement(
-                      React.Fragment,
-                      null,
-                      React.createElement("div", { className: "divider" }),
-                      React.createElement(
-                        "div",
                         { className: "sectionTitle" },
                         "Step 2: Risk factors (toggle any that apply)"
                       ),
@@ -1437,6 +1415,26 @@
                           ),
                           React.createElement("span", { className: "badge" }, React.createElement("span", { className: "dot low" }), "Low: ", counts.low_risk_count)
                         )
+                      ),
+                      React.createElement("div", { className: "divider" }),
+                      React.createElement(
+                        "div",
+                        { className: "field" },
+                        React.createElement("label", { className: "small" }, "Special region (optional)"),
+                        React.createElement(
+                          "label",
+                          { className: "check", style: { margin: 0 } },
+                          React.createElement("input", {
+                            type: "checkbox",
+                            checked: npcRegionChecked,
+                            onChange: () => setNpcRegionChecked((v) => !v),
+                          }),
+                          React.createElement(
+                            "div",
+                            { className: "labelText" },
+                            "Geographic region/ancestry with increased nasopharyngeal cancer risk (e.g., East or Southeast Asian)"
+                          )
+                        )
                       )
                     )
                   : React.createElement(
@@ -1485,7 +1483,7 @@
                       null,
                       React.createElement(
                         "div",
-                        { className: "helper", style: { marginTop: 10 } },
+                        { className: "helper populationScreeningNote", style: { marginTop: 10 } },
                         "Note: all patients with IIM, irrespective of cancer risk, should continue country- or region-specific age- and sex-appropriate routine population cancer screening."
                       )
                     )
@@ -1606,12 +1604,13 @@
                         ),
 
                         React.createElement(
-                          OutputSection,
-                          { title: "Additional screening to consider" },
+                          "div",
+                          { className: "bubble bubbleAdditional" },
+                          React.createElement("div", { className: "bubbleTitle" }, "Additional screening to consider"),
                           recommendation.content.additional.length
                             ? React.createElement(
                                 "ul",
-                                { className: "bullets" },
+                                { className: "miniBullets" },
                                 recommendation.content.additional.map((x, idx) =>
                                   React.createElement("li", { key: `${idx}-${x}` }, ...renderTextWithFDGSuperscript(x))
                                 )
@@ -1620,7 +1619,7 @@
                         ),
                         React.createElement(
                           "div",
-                          { className: "helper", style: { marginTop: 10 } },
+                          { className: "helper populationScreeningNote", style: { marginTop: 10 } },
                           "Note: all patients with IIM, irrespective of cancer risk, should continue country- or region-specific age- and sex-appropriate routine population cancer screening."
                         )
                       ),
